@@ -19,7 +19,10 @@ class API:
         response = requests.get(url, params=params)
         return Plain(**response.json())
 
-    def get_lowest(self, plains: Iterable[str], country: str = 'US', shops: Iterable[str] = ['steam']) -> Lowest:
+    def get_lowest(self,
+                   plains: Iterable[str],
+                   country: str = 'US',
+                   shops: Iterable[str] = ['steam']) -> Lowest:
         # sourcery skip: default-mutable-arg
         url = f'{self.base_url_v1}lowest/'
         params = self.default_params | {
