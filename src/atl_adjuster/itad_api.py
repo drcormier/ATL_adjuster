@@ -20,15 +20,16 @@ class API:
         return Plain(**response.json())
 
     def get_lowest(self,
-                   plains: Iterable[str],
+                   plains: Iterable[str] | str,
                    country: str = 'US',
-                   shops: Iterable[str] = ['steam']) -> Lowest:
-        # sourcery skip: default-mutable-arg
+                   shops: Iterable[str] | str = 'steam') -> Lowest:
         url = f'{self.base_url_v1}lowest/'
+        plains_str = ','.join(plains) if type(plains) == Iterable else plains
+        shops_str = ','.join(shops) if type(shops) == Iterable else shops
         params = self.default_params | {
-            'plains': ','.join(plains),
+            'plains': plains_str,
             'country': country,
-            'shops': ','.join(shops)
+            'shops': shops_str
         }
         response = requests.get(url, params=params)
         return Lowest(**response.json())
