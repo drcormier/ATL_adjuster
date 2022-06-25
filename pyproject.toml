@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "atl_adjuster"
+version = "0.1.0"
+description = ""
+authors = ["Daniel Cormier <dcormier@rochester.rr.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pydantic = "*"
+
+[tool.poetry.dev-dependencies]
+mypy = "*"
+green = "*"
+tox = "*"
+flake8 = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
