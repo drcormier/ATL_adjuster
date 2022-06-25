@@ -1,0 +1,45 @@
+version: 2.1
+orbs:
+  python: circleci/python@volatile
+
+jobs:
+  run-tests:
+    docker:
+      - image: cimg/python:3.10.2
+    resource_class: small
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: poetry
+      - run:
+          name: Run tests
+          command: poetry run green
+  run-mypy:
+    docker:
+      - image: cimg/python:3.10.2
+    resource_class: small
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: poetry
+      - run:
+          name: Run tests
+          command: poetry run mypy src
+  run-flake8:
+    docker:
+      - image: cimg/python:3.10.2
+    resource_class: small
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: poetry
+      - run:
+          name: Run tests
+          command: poetry run flake8 src
+
+workflows:
+  check-all:
+    jobs:
+      - run-tests
+      - run-mypy
+      - run-flake8
