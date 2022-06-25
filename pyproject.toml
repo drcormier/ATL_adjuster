@@ -7,6 +7,8 @@ authors = ["Daniel Cormier <dcormier@rochester.rr.com>"]
 [tool.poetry.dependencies]
 python = "^3.10"
 pydantic = "*"
+cpi = "*"
+requests = "*"
 
 [tool.poetry.dev-dependencies]
 mypy = "*"
