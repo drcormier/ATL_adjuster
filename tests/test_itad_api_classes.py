@@ -1,8 +1,16 @@
+"""
+A test file for the itad_api_classes.py file.
+"""
 import unittest
-from src.atl_adjuster.itad_api_classes import Plain, Lowest
+
+from src.atl_adjuster.itad_api_classes import Lowest, Plain
 
 
 class PlainTester(unittest.TestCase):
+    """
+    A test for the Plain model.
+    """
+
     def test_plain(self):
         data = {
             ".meta": {
@@ -17,6 +25,10 @@ class PlainTester(unittest.TestCase):
 
 
 class LowestTest(unittest.TestCase):
+    """
+    A test for the Lowest model.
+    """
+
     def test_lowest(self):
         data = {
             ".meta": {
@@ -32,8 +44,8 @@ class LowestTest(unittest.TestCase):
                     "cut": 20,
                     "added": 1651512112,
                     "urls": {
-                        "game": "https:\/\/isthereanydeal.com\/game\/roguetower\/info\/",
-                        "history": "https:\/\/isthereanydeal.com\/game\/roguetower\/history\/"
+                        "game": "https://isthereanydeal.com/game/roguetower/info/",
+                        "history": "https://isthereanydeal.com/game/roguetower/history/"
                     }
                 }
             }
