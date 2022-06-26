@@ -5,7 +5,7 @@ orbs:
 jobs:
   run-tests:
     docker:
-      - image: cimg/python:3.10.2
+      - image: cimg/python:3.10
     resource_class: small
     steps:
       - checkout
@@ -16,26 +16,37 @@ jobs:
           command: poetry run green
   run-mypy:
     docker:
-      - image: cimg/python:3.10.2
+      - image: cimg/python:3.10
     resource_class: small
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: poetry
       - run:
-          name: Run tests
+          name: Run mypy
           command: poetry run mypy src
   run-flake8:
     docker:
-      - image: cimg/python:3.10.2
+      - image: cimg/python:3.10
     resource_class: small
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: poetry
       - run:
-          name: Run tests
+          name: Run flake8
           command: poetry run flake8 src
+  run-lizard:
+    docker:
+      - image: cimg/python:3.10
+    resource_class: small
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: poetry
+      - run:
+          name: Run lizard
+          command: poetry run lizard -T nloc=150 -T length=50 -t parameter_count=10
 
 workflows:
   check-all:
@@ -43,3 +54,4 @@ workflows:
       - run-tests
       - run-mypy
       - run-flake8
+      - run-lizard
