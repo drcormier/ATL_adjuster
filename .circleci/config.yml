@@ -46,7 +46,7 @@ jobs:
           pkg-manager: poetry
       - run:
           name: Run lizard
-          command: poetry run lizard -T nloc=150 -T length=50 -t parameter_count=10
+          command: poetry run lizard -T nloc=150 -T length=50 -T parameter_count=10
 
 workflows:
   check-all:
