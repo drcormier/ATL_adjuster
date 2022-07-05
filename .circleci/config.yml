@@ -2,11 +2,18 @@ version: 2.1
 orbs:
   python: circleci/python@volatile
 
-jobs:
-  run-tests:
+executors:
+  py310-executor:
     docker:
       - image: cimg/python:3.10
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
     resource_class: small
+
+jobs:
+  run-tests:
+    executor: py310-executor
     steps:
       - checkout
       - python/install-packages:
@@ -15,9 +22,7 @@ jobs:
           name: Run tests
           command: poetry run green
   run-mypy:
-    docker:
-      - image: cimg/python:3.10
-    resource_class: small
+    executor: py310-executor
     steps:
       - checkout
       - python/install-packages:
@@ -26,9 +31,7 @@ jobs:
           name: Run mypy
           command: poetry run mypy src
   run-flake8:
-    docker:
-      - image: cimg/python:3.10
-    resource_class: small
+    executor: py310-executor
     steps:
       - checkout
       - python/install-packages:
@@ -37,9 +40,7 @@ jobs:
           name: Run flake8
           command: poetry run flake8 src
   run-lizard:
-    docker:
-      - image: cimg/python:3.10
-    resource_class: small
+    executor: py310-executor
     steps:
       - checkout
       - python/install-packages:
@@ -48,15 +49,13 @@ jobs:
           name: Run lizard
           command: poetry run lizard -T nloc=150 -T length=50 -T parameter_count=10
   run-safety:
-    docker:
-      - image: cimg/python:3.10
-    resource_class: small
+    executor: py310-executor
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: poetry
       - run:
-          name: Run lizard
+          name: Run safety
           command: poetry run safety check
 
 workflows:
