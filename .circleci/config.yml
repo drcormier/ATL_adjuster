@@ -61,8 +61,18 @@ jobs:
 workflows:
   check-all:
     jobs:
-      - run-tests
-      - run-mypy
-      - run-flake8
-      - run-lizard
-      - run-safety
+      - run-tests:
+          context:
+            - Accounts
+      - run-mypy:
+          context:
+            - Accounts
+      - run-flake8:
+          context:
+            - Accounts
+      - run-lizard:
+          context:
+            - Accounts
+      - run-safety:
+          context:
+            - Accounts
