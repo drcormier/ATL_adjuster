@@ -47,6 +47,17 @@ jobs:
       - run:
           name: Run lizard
           command: poetry run lizard -T nloc=150 -T length=50 -T parameter_count=10
+  run-safety:
+    docker:
+      - image: cimg/python:3.10
+    resource_class: small
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: poetry
+      - run:
+          name: Run lizard
+          command: poetry run safety check
 
 workflows:
   check-all:
@@ -55,3 +66,4 @@ workflows:
       - run-mypy
       - run-flake8
       - run-lizard
+      - run-safety

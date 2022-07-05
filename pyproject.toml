@@ -17,6 +17,7 @@ green = "*"
 tox = "*"
 flake8 = "*"
 lizard = "*"
+safety = "*"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
