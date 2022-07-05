@@ -12,6 +12,21 @@ executors:
     resource_class: small
 
 jobs:
+  run-validator:
+    parameters:
+      cmd:
+        type: string
+      params:
+        type: string
+        default: ""
+    executor: py310-executor
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: poetry
+      - run:
+          name: Run << parameters.cmd >>
+          command: poetry run << parameters.cmd >> << parameters.params >>
   run-tests:
     executor: py310-executor
     steps:
@@ -61,18 +76,27 @@ jobs:
 workflows:
   check-all:
     jobs:
-      - run-tests:
+      - run-validator:
           context:
             - Accounts
-      - run-mypy:
+          cmd: green
+      - run-validator:
           context:
             - Accounts
-      - run-flake8:
+          cmd: mypy
+          params: src
+      - run-validator:
           context:
             - Accounts
-      - run-lizard:
+          cmd: flake8
+          params: src
+      - run-validator:
           context:
             - Accounts
-      - run-safety:
+          cmd: lizard
+          params: -T nloc=150 -T length=50 -T parameter_count=10
+      - run-validator:
           context:
             - Accounts
+          cmd: safety
+          params: check
